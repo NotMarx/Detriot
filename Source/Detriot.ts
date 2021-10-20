@@ -1,6 +1,6 @@
 /* [WIP] This entire file will be rework */
 import { ShardClient } from "detritus-client";
-import { ApplicationCommandTypes, InteractionCallbackTypes, MessageFlags } from "detritus-client/lib/constants";
+import { ApplicationCommandTypes, InteractionCallbackTypes, MessageFlags, PresenceStatuses, ActivityTypes } from "detritus-client/lib/constants";
 import { InteractionDataApplicationCommand } from "detritus-client/lib/structures";
 import { GatewayIntents } from "detritus-client-socket/lib/constants";
 import { TOKEN, PREFIX } from "../config.json";
@@ -9,7 +9,7 @@ const client = new ShardClient(TOKEN, { cache: true, gateway: { intents: [Gatewa
 
 client.on("gatewayReady", () => {
     console.log(`${client.user.tag} is now Online!`);
-    client.gateway.setPresence({ activity: { name: "Detriot", type: 1 }, status: "idle" });
+    client.gateway.setPresence({ activity: { name: "Detriot", type: ActivityTypes.PLAYING }, status: PresenceStatuses.DND });
 
     
 });
@@ -21,7 +21,7 @@ client.on("messageCreate", async ({ message }) => {
     const command = args.shift();
 
     if (command === "ping") {
-        return message.channel.createMessage({ content: `Pong!` });
+        return message.reply({ content: `Pong!` });
     }
 });
 
